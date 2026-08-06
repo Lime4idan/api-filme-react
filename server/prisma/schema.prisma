@@ -1,0 +1,113 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           Int           @id @default(autoincrement())
+  name         String
+  email        String        @unique
+  passwordHash String
+  avatarUrl    String?
+  bio          String?
+  role         String        @default("USER")
+  isActive     Boolean       @default(true)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  favorites    Favorite[]
+  lists        MovieList[]
+  comments     Comment[]
+  ratings      Rating[]
+  commentLikes CommentLike[]
+
+  @@index([createdAt])
+}
+
+model Favorite {
+  id            Int      @id @default(autoincrement())
+  userId        Int
+  tmdbMovieId   Int
+  title         String
+  posterPath    String?
+  releaseDate   String?
+  voteAverage   Float?
+  createdAt     DateTime @default(now())
+  user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, tmdbMovieId])
+  @@index([userId, createdAt])
+}
+
+model MovieList {
+  id          Int             @id @default(autoincrement())
+  userId      Int
+  name        String
+  description String?
+  isPublic    Boolean         @default(false)
+  shareCode   String          @unique
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  user        User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items       MovieListItem[]
+
+  @@index([userId, updatedAt])
+}
+
+model MovieListItem {
+  id           Int       @id @default(autoincrement())
+  listId       Int
+  tmdbMovieId  Int
+  title        String
+  posterPath   String?
+  releaseDate  String?
+  voteAverage  Float?
+  position     Int       @default(0)
+  createdAt    DateTime  @default(now())
+  list         MovieList @relation(fields: [listId], references: [id], onDelete: Cascade)
+
+  @@unique([listId, tmdbMovieId])
+  @@index([listId, position])
+}
+
+model Comment {
+  id          Int           @id @default(autoincrement())
+  userId      Int
+  tmdbMovieId Int
+  content     String
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  user        User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  likes       CommentLike[]
+
+  @@index([tmdbMovieId, createdAt])
+  @@index([userId])
+}
+
+model Rating {
+  id          Int      @id @default(autoincrement())
+  userId      Int
+  tmdbMovieId Int
+  score       Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, tmdbMovieId])
+  @@index([tmdbMovieId])
+}
+
+model CommentLike {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  commentId Int
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  comment   Comment  @relation(fields: [commentId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, commentId])
+  @@index([commentId])
+}
