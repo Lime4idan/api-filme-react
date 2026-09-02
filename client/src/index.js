@@ -7,20 +7,23 @@ import { AuthProvider } from "./contexts/AuthContext";
 import { FavoritesProvider } from "./contexts/FavoritesContext";
 import { ToastProvider } from "./contexts/ToastContext";
 import GlobalStyles, { theme } from "./styles/GlobalStyles";
+import AppErrorBoundary from "./components/AppErrorBoundary";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
       <ThemeProvider theme={theme}>
         <GlobalStyles />
-        <ToastProvider>
-          <AuthProvider>
-            <FavoritesProvider>
-              <App />
-            </FavoritesProvider>
-          </AuthProvider>
-        </ToastProvider>
+        <AppErrorBoundary>
+          <ToastProvider>
+            <AuthProvider>
+              <FavoritesProvider>
+                <App />
+              </FavoritesProvider>
+            </AuthProvider>
+          </ToastProvider>
+        </AppErrorBoundary>
       </ThemeProvider>
     </BrowserRouter>
   </React.StrictMode>

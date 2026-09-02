@@ -4,16 +4,28 @@
     <meta charset="utf-8" />
     <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#090b14" />
+    <meta name="theme-color" content="#060709" />
     <meta
       name="description"
       content="MovieHub — descubra, avalie e organize os filmes que fazem parte da sua história."
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <title>MovieHub</title>
+    <style>
+      html, body, #root { min-height: 100%; }
+      body { margin: 0; background: #060709; color: #f7f5f2; font-family: system-ui, sans-serif; }
+      .app-boot { min-height: 100vh; display: grid; place-items: center; text-align: center; }
+      .app-boot__mark { width: 52px; height: 52px; margin: 0 auto 16px; border: 1px solid rgba(255,255,255,.14); border-radius: 17px; background: linear-gradient(135deg,#ff365e,#ff6a47); box-shadow: 0 20px 60px rgba(255,54,94,.25); animation: boot-pulse 1.2s ease-in-out infinite alternate; }
+      .app-boot strong { display: block; font-size: 1.2rem; letter-spacing: -.03em; }
+      .app-boot span { display: block; margin-top: 7px; color: #9298a6; font-size: .82rem; }
+      @keyframes boot-pulse { to { transform: scale(.92); opacity: .72; } }
+    </style>
+    <title>MovieHub — seu universo de cinema</title>
   </head>
   <body>
     <noscript>Ative o JavaScript para usar o MovieHub.</noscript>
-    <div id="root"></div>
+    <div id="root"><div class="app-boot" role="status"><div><div class="app-boot__mark"></div><strong>MovieHub</strong><span>Preparando sua próxima sessão…</span></div></div></div>
   </body>
 </html>
