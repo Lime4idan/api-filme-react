@@ -1,7 +1,7 @@
 export const TMDB_IMAGE = "https://image.tmdb.org/t/p";
 
 export const imageUrl = (path, size = "w500") => (
-  path ? `${TMDB_IMAGE}/${size}${path}` : null
+  path ? (/^https?:\/\//i.test(path) ? path : `${TMDB_IMAGE}/${size}${path}`) : null
 );
 
 export const movieYear = (date) => {

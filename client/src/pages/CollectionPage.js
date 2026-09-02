@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
+import styled from "styled-components";
 import EmptyState from "../components/EmptyState";
 import ErrorState from "../components/ErrorState";
 import FilterBar from "../components/FilterBar";
@@ -14,6 +15,24 @@ const definitions = {
   upcoming: { title: "Lançamentos", eyebrow: "Na sua agenda", description: "As próximas estreias para acompanhar de perto.", loader: movieService.upcoming },
   nowPlaying: { title: "Em cartaz", eyebrow: "Nas telonas", description: "O que está em exibição nos cinemas neste momento.", loader: movieService.nowPlaying },
 };
+
+const CatalogueHeader = styled(PageHeader)`
+  position: relative;
+  overflow: hidden;
+  align-items: center;
+  min-height: 260px;
+  padding: clamp(28px,4vw,48px);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 26px;
+  background: radial-gradient(circle at 84% 30%,rgba(255,54,94,.16),transparent 20rem),linear-gradient(125deg,#171016,#0b0d11 58%);
+  box-shadow: 0 25px 75px rgba(0,0,0,.26);
+  &::after { content: "CINEMA"; position: absolute; right: -20px; bottom: -32px; color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,.08); font: 800 clamp(4.8rem,11vw,10rem)/1 "Manrope"; letter-spacing: -.08em; }
+  > div { position: relative; z-index: 1; }
+  .catalog-meta { position: relative; z-index: 1; display: grid; justify-items: end; gap: 8px; }
+  .catalog-meta strong { font: 800 clamp(2.6rem,5vw,4.5rem)/1 "Manrope"; }
+  .catalog-meta span { color: ${({ theme }) => theme.colors.muted}; font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; }
+  @media (max-width: 650px) { min-height: 230px; .catalog-meta { display: none; } }
+`;
 
 const fromParams = (params) => ({ page: Number(params.get("page")) || 1, genre: params.get("genre") || "", year: params.get("year") || "", voteMin: params.get("voteMin") || "", language: params.get("language") || "", sort: params.get("sort") || "popularity" });
 
@@ -38,5 +57,5 @@ export default function CollectionPage({ type }) {
   const update = (next) => { const params = new URLSearchParams(); Object.entries(next).forEach(([key, value]) => { if (value && !(key === "sort" && value === "popularity")) params.set(key, value); }); setSearchParams(params); };
   const title = genreId ? (genre?.name || "Categoria") : definition.title;
   const description = genreId ? `Explore filmes de ${genre?.name || "deste gênero"}, com filtros que consultam o catálogo completo.` : definition.description;
-  return <Page><PageHeader><div><Eyebrow>{genreId ? "Explore por gênero" : definition.eyebrow}</Eyebrow><h1>{title}</h1><p>{description}</p></div></PageHeader><FilterBar filters={filters} genres={genres} showGenre={!genreId} onChange={update} />{loading ? <LoadingSkeleton /> : error ? <ErrorState message={error} retry={() => update({ ...filters })} /> : data?.results?.length ? <><MovieGrid movies={data.results} /><Pagination page={data.page} totalPages={data.totalPages} onChange={(page) => update({ ...filters, page })} /></> : <EmptyState title="Nenhum filme encontrado" message="Tente remover um filtro ou escolher outro período." />}</Page>;
+  return <Page><CatalogueHeader><div><Eyebrow>{genreId ? "Explore por gênero" : definition.eyebrow}</Eyebrow><h1>{title}</h1><p>{description}</p></div><div className="catalog-meta"><strong>{data?.totalResults?.toLocaleString("pt-BR") || "∞"}</strong><span>histórias para descobrir</span></div></CatalogueHeader><FilterBar filters={filters} genres={genres} showGenre={!genreId} onChange={update} />{loading ? <LoadingSkeleton /> : error ? <ErrorState message={error} retry={() => update({ ...filters })} /> : data?.results?.length ? <><MovieGrid movies={data.results} /><Pagination page={data.page} totalPages={data.totalPages} onChange={(page) => update({ ...filters, page })} /></> : <EmptyState title="Nenhum filme encontrado" message="Tente remover um filtro ou escolher outro período." />}</Page>;
 }

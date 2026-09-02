@@ -2,8 +2,10 @@ import styled from "styled-components";
 
 export const Page = styled.main`
   min-height: 100vh;
-  padding: 28px clamp(20px, 3.4vw, 56px) 72px;
-  @media (max-width: 920px) { padding-top: 90px; }
+  padding: 48px clamp(22px, 4vw, 68px) 96px;
+  animation: fadeUp .45s ease both;
+  @media (max-width: 920px) { padding-top: 108px; }
+  @media (max-width: 520px) { padding-inline: 18px; padding-bottom: 112px; }
 `;
 
 export const PageHeader = styled.header`
@@ -11,9 +13,9 @@ export const PageHeader = styled.header`
   align-items: flex-end;
   justify-content: space-between;
   gap: 24px;
-  margin-bottom: 30px;
-  h1 { margin: 0 0 8px; font-size: clamp(2rem, 4vw, 3.4rem); }
-  p { color: ${({ theme }) => theme.colors.muted}; margin: 0; max-width: 650px; }
+  margin-bottom: 38px;
+  h1 { margin: 0 0 10px; font-size: clamp(2.4rem, 5vw, 4.6rem); line-height: .98; max-width: 900px; text-wrap: balance; }
+  p { color: ${({ theme }) => theme.colors.muted}; margin: 0; max-width: 680px; line-height: 1.65; font-size: 1rem; }
   @media (max-width: 650px) { align-items: stretch; flex-direction: column; }
 `;
 
@@ -21,12 +23,13 @@ export const Eyebrow = styled.span`
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  color: ${({ theme }) => theme.colors.coral};
+  color: ${({ theme }) => theme.colors.accent};
   font-weight: 700;
-  font-size: .78rem;
-  letter-spacing: .13em;
+  font-size: .72rem;
+  letter-spacing: .19em;
   text-transform: uppercase;
-  margin-bottom: 10px;
+  margin-bottom: 13px;
+  &::before { content: ""; width: 24px; height: 1px; background: currentColor; }
 `;
 
 export const Button = styled.button`
@@ -34,40 +37,41 @@ export const Button = styled.button`
   align-items: center;
   justify-content: center;
   gap: 9px;
-  min-height: 44px;
-  padding: 0 18px;
+  min-height: 48px;
+  padding: 0 21px;
   border: 1px solid ${({ $variant, theme }) => $variant === "ghost" ? theme.colors.border : "transparent"};
-  border-radius: 12px;
-  background: ${({ $variant, theme }) => $variant === "ghost" ? "rgba(255,255,255,.055)" : $variant === "danger" ? theme.colors.danger : `linear-gradient(135deg, ${theme.colors.primary}, ${theme.colors.primaryStrong})`};
+  border-radius: 999px;
+  background: ${({ $variant, theme }) => $variant === "ghost" ? "rgba(255,255,255,.065)" : $variant === "danger" ? theme.colors.danger : `linear-gradient(125deg, ${theme.colors.primary}, ${theme.colors.primaryStrong})`};
   color: white;
   font-weight: 700;
   cursor: pointer;
-  transition: transform .18s ease, border-color .18s ease, background .18s ease;
-  &:hover:not(:disabled) { transform: translateY(-2px); border-color: rgba(255,255,255,.22); }
+  box-shadow: ${({ $variant }) => $variant ? "none" : "0 10px 28px rgba(217,24,73,.25)"};
+  transition: transform .22s ease, border-color .22s ease, background .22s ease, box-shadow .22s ease;
+  &:hover:not(:disabled) { transform: translateY(-2px); border-color: rgba(255,255,255,.24); box-shadow: ${({ $variant }) => $variant ? "0 10px 30px rgba(0,0,0,.24)" : "0 14px 34px rgba(217,24,73,.36)"}; }
   &:disabled { opacity: .52; cursor: not-allowed; }
 `;
 
 export const IconButton = styled.button`
-  width: 42px;
-  height: 42px;
+  width: 44px;
+  height: 44px;
   display: inline-grid;
   place-items: center;
   border-radius: 50%;
   border: 1px solid ${({ theme }) => theme.colors.border};
-  background: rgba(10,12,20,.7);
+  background: rgba(8,9,12,.74);
   color: white;
   cursor: pointer;
   backdrop-filter: blur(14px);
   transition: transform .18s ease, background .18s ease;
-  &:hover { transform: scale(1.06); background: rgba(139,92,246,.32); }
+  &:hover { transform: scale(1.06); background: rgba(255,54,94,.28); }
 `;
 
 export const Panel = styled.section`
-  background: linear-gradient(145deg, rgba(23,28,44,.94), rgba(14,17,29,.94));
+  background: linear-gradient(145deg, rgba(20,23,29,.94), rgba(11,13,17,.96));
   border: 1px solid ${({ theme }) => theme.colors.border};
-  border-radius: 20px;
+  border-radius: 24px;
   padding: clamp(18px, 3vw, 30px);
-  box-shadow: 0 18px 50px rgba(0,0,0,.18);
+  box-shadow: 0 22px 70px rgba(0,0,0,.24);
 `;
 
 export const Field = styled.label`
@@ -79,14 +83,14 @@ export const Field = styled.label`
   input, textarea, select {
     width: 100%;
     border: 1px solid ${({ theme }) => theme.colors.border};
-    border-radius: 12px;
-    background: #0d111d;
+    border-radius: 14px;
+    background: #090b0f;
     color: ${({ theme }) => theme.colors.text};
     padding: 13px 14px;
     transition: border-color .2s;
   }
   textarea { min-height: 110px; resize: vertical; }
-  input:focus, textarea:focus, select:focus { border-color: ${({ theme }) => theme.colors.primary}; outline: none; }
+  input:focus, textarea:focus, select:focus { border-color: ${({ theme }) => theme.colors.primary}; box-shadow: 0 0 0 3px rgba(255,54,94,.1); outline: none; }
   small { color: ${({ theme }) => theme.colors.danger}; }
 `;
 
@@ -102,8 +106,8 @@ export const Chip = styled.span`
   padding: 0 11px;
   border: 1px solid ${({ theme }) => theme.colors.border};
   border-radius: 999px;
-  background: rgba(255,255,255,.06);
-  color: ${({ theme }) => theme.colors.muted};
+  background: rgba(255,255,255,.075);
+  color: #d8d9de;
   font-size: .82rem;
 `;
 

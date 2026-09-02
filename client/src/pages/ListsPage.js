@@ -12,21 +12,27 @@ import { Button, Eyebrow, Field, Page, PageHeader, Panel } from "../styles/ui";
 import { imageUrl } from "../utils/movie";
 
 const Grid = styled.div`
-  display: grid; grid-template-columns: repeat(auto-fill,minmax(270px,1fr)); gap: 20px;
-  .list { position: relative; overflow: hidden; }
-  .mosaic { display: grid; grid-template-columns: repeat(4,1fr); height: 150px; margin: -30px -30px 20px; background: #0e121e; }
-  .mosaic img { width: 100%; height: 100%; object-fit: cover; }
-  .empty-poster { display: grid; place-items: center; color: #5c6579; border-right: 1px solid rgba(255,255,255,.05); }
-  h2 { margin-bottom: 8px; }
-  p { color: ${({ theme }) => theme.colors.muted}; min-height: 44px; line-height: 1.45; }
+  display: grid; grid-template-columns: repeat(auto-fill,minmax(300px,1fr)); gap: 24px;
+  .list { position: relative; overflow: hidden; transition: transform .3s ease, border-color .3s ease, box-shadow .3s ease; }
+  .list:hover { transform: translateY(-6px); border-color: rgba(255,255,255,.18); box-shadow: 0 30px 80px rgba(0,0,0,.38); }
+  .mosaic { position: relative; display: grid; grid-template-columns: repeat(4,1fr); height: 190px; margin: calc(-1 * clamp(18px, 3vw, 30px)) calc(-1 * clamp(18px, 3vw, 30px)) 24px; background: #0d0f13; overflow: hidden; }
+  .mosaic::after { content: ""; position: absolute; inset: 45% 0 0; background: linear-gradient(transparent,rgba(8,9,11,.78)); }
+  .mosaic img { width: 100%; height: 100%; object-fit: cover; transition: transform .45s ease; }
+  .list:hover .mosaic img { transform: scale(1.045); }
+  .empty-poster { display: grid; place-items: center; color: #545965; border-right: 1px solid rgba(255,255,255,.05); background: radial-gradient(circle at center,rgba(255,54,94,.08),transparent 70%); }
+  h2 { margin-bottom: 9px; font-size: 1.35rem; }
+  p { color: ${({ theme }) => theme.colors.muted}; min-height: 46px; line-height: 1.55; }
   .meta { display: flex; align-items: center; justify-content: space-between; color: ${({ theme }) => theme.colors.muted}; font-size: .84rem; }
   .meta span { display: flex; align-items: center; gap: 5px; }
-  .delete { position: absolute; right: 12px; top: 12px; width: 38px; height: 38px; display: grid; place-items: center; border: 0; border-radius: 50%; background: rgba(7,9,15,.78); color: #ff8899; cursor: pointer; }
+  .delete { position: absolute; z-index: 3; right: 13px; top: 13px; width: 40px; height: 40px; display: grid; place-items: center; border: 1px solid rgba(255,255,255,.1); border-radius: 50%; background: rgba(7,8,10,.74); color: #ff899c; cursor: pointer; backdrop-filter: blur(12px); opacity: 0; transform: translateY(-5px); transition: .2s; }
+  .list:hover .delete, .delete:focus { opacity: 1; transform: none; }
+  @media (hover: none) { .delete { opacity: 1; transform: none; } }
 `;
 const Create = styled(Panel)`
-  margin-bottom: 26px;
+  margin-bottom: 30px; border-color: rgba(255,54,94,.16); background: radial-gradient(circle at 0 0,rgba(255,54,94,.09),transparent 22rem),linear-gradient(145deg,rgba(20,23,29,.96),rgba(11,13,17,.96));
+  h2 { margin-bottom: 20px; }
   .row { display: grid; grid-template-columns: 1fr 2fr auto auto; gap: 12px; align-items: end; }
-  .toggle { display: flex; align-items: center; gap: 8px; height: 44px; color: ${({ theme }) => theme.colors.muted}; white-space: nowrap; }
+  .toggle { display: flex; align-items: center; gap: 8px; height: 48px; color: ${({ theme }) => theme.colors.muted}; white-space: nowrap; }
   @media (max-width: 800px) { .row { grid-template-columns: 1fr; } }
 `;
 

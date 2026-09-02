@@ -7,7 +7,7 @@ import { ToastProvider } from "./contexts/ToastContext";
 import { theme } from "./styles/GlobalStyles";
 
 export const renderApp = (ui, { route = "/" } = {}) => render(
-  <MemoryRouter initialEntries={[route]}>
+  <MemoryRouter initialEntries={[route]} future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
     <ThemeProvider theme={theme}>
       <ToastProvider><AuthProvider><FavoritesProvider>{ui}</FavoritesProvider></AuthProvider></ToastProvider>
     </ThemeProvider>

@@ -7,15 +7,16 @@ import { movieSnapshot } from "../utils/movie";
 import { useToast } from "../hooks/useToast";
 
 const Overlay = styled.div`
-  position: fixed; z-index: 1000; inset: 0; display: grid; place-items: center; padding: 20px; background: rgba(3,5,10,.8); backdrop-filter: blur(8px);
-  .modal { width: min(520px, 100%); max-height: 80vh; overflow-y: auto; padding: 25px; border: 1px solid ${({ theme }) => theme.colors.border}; border-radius: 20px; background: #151a29; box-shadow: ${({ theme }) => theme.shadow}; }
+  position: fixed; z-index: 1000; inset: 0; display: grid; place-items: center; padding: 20px; background: rgba(2,3,5,.82); backdrop-filter: blur(12px);
+  .modal { width: min(540px, 100%); max-height: 82vh; overflow-y: auto; padding: 27px; border: 1px solid rgba(255,255,255,.11); border-radius: 24px; background: radial-gradient(circle at 100% 0,rgba(255,54,94,.1),transparent 18rem),#111318; box-shadow: 0 35px 110px rgba(0,0,0,.65); animation: fadeUp .25s ease both; }
   .head { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
   .close { border: 0; background: transparent; color: ${({ theme }) => theme.colors.muted}; cursor: pointer; }
   .lists { display: grid; gap: 9px; margin: 20px 0; }
-  .list { display: flex; justify-content: space-between; align-items: center; gap: 16px; width: 100%; padding: 14px; border: 1px solid ${({ theme }) => theme.colors.border}; border-radius: 12px; background: rgba(255,255,255,.03); text-align: left; cursor: pointer; }
-  .list:hover { border-color: ${({ theme }) => theme.colors.primary}; }
+  .list { display: flex; justify-content: space-between; align-items: center; gap: 16px; width: 100%; padding: 15px; border: 1px solid ${({ theme }) => theme.colors.border}; border-radius: 14px; background: rgba(255,255,255,.03); text-align: left; cursor: pointer; transition: .2s; }
+  .list:hover { border-color: rgba(255,54,94,.42); background: rgba(255,54,94,.06); transform: translateX(3px); }
   .list small { color: ${({ theme }) => theme.colors.muted}; display: block; margin-top: 3px; }
   .create { display: grid; grid-template-columns: 1fr auto; gap: 9px; }
+  @media (max-width: 500px) { .create { grid-template-columns: 1fr; } }
 `;
 
 export default function AddToListModal({ movie, onClose }) {

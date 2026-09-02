@@ -3,16 +3,17 @@ import styled from "styled-components";
 import { Button } from "../styles/ui";
 
 const Wrap = styled.div`
-  min-height: 260px;
+  position: relative;
+  min-height: 300px;
   display: grid;
   place-items: center;
   text-align: center;
   padding: 40px 20px;
   border: 1px dashed ${({ theme }) => theme.colors.border};
-  border-radius: 20px;
-  background: rgba(255,255,255,.02);
+  border-radius: 24px;
+  background: radial-gradient(circle at 50% 45%,rgba(255,54,94,.07),transparent 16rem),rgba(255,255,255,.018);
   color: ${({ theme }) => theme.colors.muted};
-  svg { color: ${({ theme }) => theme.colors.primary}; margin: 0 auto 16px; }
+  svg { color: ${({ theme }) => theme.colors.primary}; margin: 0 auto 18px; filter: drop-shadow(0 0 14px rgba(255,54,94,.35)); }
   h2 { color: ${({ theme }) => theme.colors.text}; margin-bottom: 8px; }
   p { max-width: 480px; }
 `;
