@@ -9,17 +9,21 @@ import { Button, Eyebrow, Field, FormGrid, Page, PageHeader, Panel } from "../st
 import { formatDate } from "../utils/movie";
 
 const Layout = styled.div`
-  display: grid; grid-template-columns: 300px minmax(0,1fr); gap: 24px;
-  .identity { text-align: center; }
-  .avatar { width: 110px; height: 110px; display: grid; place-items: center; margin: 0 auto 16px; border-radius: 50%; overflow: hidden; background: linear-gradient(135deg, ${({ theme }) => theme.colors.primary}, ${({ theme }) => theme.colors.coral}); }
+  display: grid; grid-template-columns: 320px minmax(0,1fr); gap: 26px;
+  .identity { position: relative; overflow: hidden; padding-top: 85px; text-align: center; }
+  .identity::before { content: ""; position: absolute; inset: 0 0 auto; height: 120px; background: radial-gradient(circle at 35% 20%,rgba(255,106,71,.48),transparent 40%),linear-gradient(120deg,rgba(255,54,94,.28),rgba(145,130,255,.16)); }
+  .avatar { position: relative; width: 116px; height: 116px; display: grid; place-items: center; margin: 0 auto 17px; border: 5px solid #111319; border-radius: 50%; overflow: hidden; background: linear-gradient(135deg, ${({ theme }) => theme.colors.primary}, ${({ theme }) => theme.colors.coral}); box-shadow: 0 14px 36px rgba(0,0,0,.38); }
   .avatar img { width: 100%; height: 100%; object-fit: cover; }
   .email { color: ${({ theme }) => theme.colors.muted}; word-break: break-all; }
   .joined { display: flex; justify-content: center; gap: 7px; color: ${({ theme }) => theme.colors.muted}; font-size: .85rem; }
-  .stats { display: grid; grid-template-columns: repeat(2,1fr); gap: 9px; margin-top: 22px; }
-  .stat { padding: 12px; border-radius: 12px; background: rgba(255,255,255,.04); }
+  .stats { display: grid; grid-template-columns: repeat(2,1fr); gap: 9px; margin-top: 24px; }
+  .stat { padding: 14px; border: 1px solid rgba(255,255,255,.06); border-radius: 14px; background: rgba(255,255,255,.035); }
+  .stat svg { color: ${({ theme }) => theme.colors.primary}; }
   .stat strong { display: block; font-size: 1.35rem; }
   .stat span { color: ${({ theme }) => theme.colors.muted}; font-size: .76rem; }
   .forms { display: grid; gap: 24px; }
+  .forms > section { position: relative; overflow: hidden; }
+  .forms > section::after { content: ""; position: absolute; width: 180px; height: 180px; right: -100px; top: -110px; border-radius: 50%; background: rgba(255,54,94,.055); }
   .form-actions { display: flex; justify-content: flex-end; }
   @media (max-width: 800px) { grid-template-columns: 1fr; }
 `;

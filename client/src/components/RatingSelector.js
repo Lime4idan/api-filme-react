@@ -6,20 +6,21 @@ import { useAuth } from "../hooks/useAuth";
 import { useToast } from "../hooks/useToast";
 
 const Wrap = styled.section`
-  padding: 22px; border: 1px solid ${({ theme }) => theme.colors.border}; border-radius: 18px; background: rgba(255,255,255,.035);
+  padding: 24px; border: 1px solid rgba(255,183,92,.14); border-radius: 21px; background: radial-gradient(circle at 100% 0,rgba(255,183,92,.1),transparent 15rem),linear-gradient(145deg,rgba(20,22,27,.94),rgba(10,12,15,.96)); box-shadow: 0 22px 65px rgba(0,0,0,.24);
   .top { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
   h3 { margin: 0 0 5px; }
   p { margin: 0; color: ${({ theme }) => theme.colors.muted}; }
-  .scores { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 18px; }
+  .scores { display: grid; grid-template-columns: repeat(5,1fr); gap: 7px; margin-top: 20px; }
   .remove { border: 0; background: transparent; color: ${({ theme }) => theme.colors.danger}; cursor: pointer; }
 `;
 
 const ScoreButton = styled.button`
-  width: 38px; height: 38px; border-radius: 10px;
+  min-width: 0; height: 39px; border-radius: 10px;
   border: 1px solid ${({ theme }) => theme.colors.border};
-  background: ${({ $active, theme }) => $active ? theme.colors.primary : "rgba(255,255,255,.04)"};
+  background: ${({ $active, theme }) => $active ? `linear-gradient(135deg,${theme.colors.coral},${theme.colors.primary})` : "rgba(255,255,255,.04)"};
   color: ${({ $active, theme }) => $active ? "white" : theme.colors.muted};
-  cursor: pointer;
+  cursor: pointer; transition: transform .18s ease, background .18s ease;
+  &:hover { transform: translateY(-2px); background: ${({ $active, theme }) => $active ? theme.colors.primary : "rgba(255,255,255,.09)"}; }
 `;
 
 export default function RatingSelector({ movieId }) {

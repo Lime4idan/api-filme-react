@@ -12,13 +12,14 @@ import ErrorState from "./ErrorState";
 import Pagination from "./Pagination";
 
 const Section = styled.section`
-  margin-top: 46px;
-  .title { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+  margin: 68px auto 0; max-width: 1180px;
+  .title { display: flex; align-items: center; gap: 11px; margin-bottom: 22px; }
+  .title svg { color: ${({ theme }) => theme.colors.primary}; }
   .title h2 { margin: 0; }
-  form { display: grid; gap: 10px; padding: 18px; border: 1px solid ${({ theme }) => theme.colors.border}; border-radius: 16px; background: rgba(255,255,255,.03); }
+  form { display: grid; gap: 10px; padding: 20px; border: 1px solid ${({ theme }) => theme.colors.border}; border-radius: 19px; background: linear-gradient(145deg,rgba(255,255,255,.04),rgba(255,255,255,.015)); }
   textarea { width: 100%; min-height: 100px; padding: 13px; border: 0; background: transparent; color: white; resize: vertical; outline: none; }
   .form-bottom { display: flex; align-items: center; justify-content: space-between; gap: 12px; color: ${({ theme }) => theme.colors.muted}; font-size: .82rem; }
-  .signin { padding: 18px; border-radius: 14px; background: rgba(139,92,246,.09); color: ${({ theme }) => theme.colors.muted}; }
+  .signin { padding: 20px; border: 1px solid rgba(255,54,94,.1); border-radius: 16px; background: rgba(255,54,94,.055); color: ${({ theme }) => theme.colors.muted}; }
 `;
 
 export default function CommentSection({ movieId }) {

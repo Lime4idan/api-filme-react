@@ -7,7 +7,7 @@ const Context = createContext(null);
 const Stack = styled.div`
   position: fixed;
   right: 20px;
-  bottom: 20px;
+  bottom: 24px;
   z-index: 1200;
   display: grid;
   gap: 10px;
@@ -19,13 +19,14 @@ const ToastItem = styled.div`
   grid-template-columns: auto 1fr auto;
   align-items: start;
   gap: 12px;
-  padding: 15px;
+  padding: 16px;
   border: 1px solid ${({ theme }) => theme.colors.border};
   border-left: 3px solid ${({ $type, theme }) => $type === "error" ? theme.colors.danger : $type === "success" ? theme.colors.success : theme.colors.primary};
-  border-radius: 14px;
-  background: rgba(17,20,33,.96);
+  border-radius: 17px;
+  background: rgba(15,17,21,.96);
   box-shadow: ${({ theme }) => theme.shadow};
   backdrop-filter: blur(20px);
+  animation: fadeUp .25s ease both;
   p { margin: 0; line-height: 1.4; }
   button { border: 0; background: transparent; color: ${({ theme }) => theme.colors.muted}; cursor: pointer; }
 `;
