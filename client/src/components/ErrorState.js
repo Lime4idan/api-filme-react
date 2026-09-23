@@ -16,6 +16,6 @@ const Wrap = styled.div`
   h2 { color: ${({ theme }) => theme.colors.text}; margin: 14px 0 8px; }
 `;
 
-export default function ErrorState({ message = "Não foi possível carregar o conteúdo.", retry }) {
-  return <Wrap role="alert"><div><CircleAlert size={32} /><h2>Algo saiu do roteiro</h2><p>{message}</p>{retry && <Button onClick={retry}><RotateCcw size={17} /> Tentar novamente</Button>}</div></Wrap>;
+export default function ErrorState({ message = "Could not load this content.", retry }) {
+  return <Wrap role="alert"><div><CircleAlert size={32} /><h2>Something went off script</h2><p>{message}</p>{retry && <Button onClick={retry}><RotateCcw size={17} /> Try again</Button>}</div></Wrap>;
 }

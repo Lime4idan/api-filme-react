@@ -2,7 +2,7 @@ const { Prisma } = require("@prisma/client");
 const AppError = require("../utils/AppError");
 
 const notFound = (req, _res, next) => {
-  next(new AppError(404, "ROUTE_NOT_FOUND", `Rota não encontrada: ${req.method} ${req.originalUrl}`));
+  next(new AppError(404, "ROUTE_NOT_FOUND", `Route not found: ${req.method} ${req.originalUrl}`));
 };
 
 const errorHandler = (error, _req, res, _next) => {
@@ -10,11 +10,11 @@ const errorHandler = (error, _req, res, _next) => {
 
   if (error instanceof Prisma.PrismaClientKnownRequestError) {
     if (error.code === "P2002") {
-      normalized = new AppError(409, "DUPLICATE_RESOURCE", "Este registro já existe");
+      normalized = new AppError(409, "DUPLICATE_RESOURCE", "This record already exists");
     } else if (error.code === "P2025") {
-      normalized = new AppError(404, "RESOURCE_NOT_FOUND", "Recurso não encontrado");
+      normalized = new AppError(404, "RESOURCE_NOT_FOUND", "Resource not found");
     } else {
-      normalized = new AppError(500, "DATABASE_ERROR", "Não foi possível concluir a operação no banco");
+      normalized = new AppError(500, "DATABASE_ERROR", "Could not complete the database operation");
     }
   }
 
@@ -22,7 +22,7 @@ const errorHandler = (error, _req, res, _next) => {
   const body = {
     error: {
       code: normalized.code || "INTERNAL_ERROR",
-      message: status >= 500 ? "Ocorreu um erro interno" : normalized.message,
+      message: status >= 500 ? "An internal error occurred" : normalized.message,
     },
   };
 

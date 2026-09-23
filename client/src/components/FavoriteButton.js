@@ -36,8 +36,8 @@ export default function FavoriteButton({ movie, compact = false, className }) {
     try { await toggle(movie); } catch (error) { toast.error(error.message); }
   };
   return (
-    <Button className={className} onClick={handleClick} $active={active} $compact={compact} aria-label={active ? `Remover ${movie.title} dos favoritos` : `Adicionar ${movie.title} aos favoritos`} aria-pressed={active}>
-      <Heart size={18} fill={active ? "currentColor" : "none"} />{!compact && (active ? "Salvo" : "Favoritar")}
+    <Button className={className} onClick={handleClick} $active={active} $compact={compact} aria-label={active ? `Remove ${movie.title} from favorites` : `Add ${movie.title} to favorites`} aria-pressed={active}>
+      <Heart size={18} fill={active ? "currentColor" : "none"} />{!compact && (active ? "Saved" : "Favorite")}
     </Button>
   );
 }

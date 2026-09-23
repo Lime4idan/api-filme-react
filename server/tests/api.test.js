@@ -16,8 +16,8 @@ beforeAll(async () => {
 
 afterAll(async () => prisma.$disconnect());
 
-describe("autenticação", () => {
-  test("cadastra, persiste a sessão e não expõe o hash", async () => {
+describe("authentication", () => {
+  test("registers, persists the session, and does not expose the hash", async () => {
     const agent = request.agent(app);
     const response = await agent.post("/api/auth/register").send({ name: "Ana Teste", email: "  ANA@EXAMPLE.COM ", password: "SenhaSegura123!", confirmPassword: "SenhaSegura123!" });
     expect(response.status).toBe(201);
@@ -28,13 +28,13 @@ describe("autenticação", () => {
     expect(me.body.user.name).toBe("Ana Teste");
   });
 
-  test("valida cadastro duplicado e login", async () => {
+  test("validates duplicate registration and login", async () => {
     const duplicate = await request(app).post("/api/auth/register").send({ name: "Outra Ana", email: "ana@example.com", password: "SenhaSegura123!" });
     expect(duplicate.status).toBe(409);
     expect(duplicate.body.error.code).toBe("EMAIL_IN_USE");
     const invalid = await request(app).post("/api/auth/login").send({ email: "ana@example.com", password: "errada" });
     expect(invalid.status).toBe(401);
-    expect(invalid.body.error.message).toBe("E-mail ou senha inválidos");
+    expect(invalid.body.error.message).toBe("Invalid email or password");
     const valid = await request(app).post("/api/auth/login").send({ email: "ana@example.com", password: "SenhaSegura123!" });
     expect(valid.status).toBe(200);
   });
@@ -61,7 +61,7 @@ describe("recursos privados e sociais", () => {
     await outsider.post("/api/auth/register").send({ name: "Beto Teste", email: "beto@example.com", password: "OutraSenha123!" });
   });
 
-  test("adiciona favorito sem duplicar", async () => {
+  test("adds a favorite without duplicates", async () => {
     expect((await owner.post("/api/favorites").send(movie)).status).toBe(201);
     const duplicate = await owner.post("/api/favorites").send(movie);
     expect(duplicate.status).toBe(409);
@@ -70,17 +70,17 @@ describe("recursos privados e sociais", () => {
     expect(items.body.items[0].tmdbMovieId).toBe(550);
   });
 
-  test("cria lista e restringe a edição ao dono", async () => {
-    const created = await owner.post("/api/lists").send({ name: "Meus clássicos", description: "Favoritos", isPublic: false });
+  test("creates a list and restricts editing to its owner", async () => {
+    const created = await owner.post("/api/lists").send({ name: "My classics", description: "Favorites", isPublic: false });
     expect(created.status).toBe(201);
     listId = created.body.list.id;
     expect((await owner.post(`/api/lists/${listId}/items`).send(movie)).status).toBe(201);
     expect((await outsider.get(`/api/lists/${listId}`)).status).toBe(404);
-    expect((await outsider.put(`/api/lists/${listId}`).send({ name: "Invasão" })).status).toBe(404);
+    expect((await outsider.put(`/api/lists/${listId}`).send({ name: "Intrusion" })).status).toBe(404);
   });
 
-  test("publica comentários, impede edição alheia e permite curtida", async () => {
-    const created = await owner.post("/api/movies/550/comments").send({ content: "Um comentário importante." });
+  test("posts comments, prevents unauthorized editing, and allows likes", async () => {
+    const created = await owner.post("/api/movies/550/comments").send({ content: "An important comment." });
     expect(created.status).toBe(201);
     commentId = created.body.comment.id;
     expect((await outsider.put(`/api/comments/${commentId}`).send({ content: "Alterado" })).status).toBe(403);
@@ -91,7 +91,7 @@ describe("recursos privados e sociais", () => {
     expect(comments.body.comments[0].likedByMe).toBe(true);
   });
 
-  test("cria e atualiza uma única avaliação por filme", async () => {
+  test("creates and updates a single rating per movie", async () => {
     expect((await owner.post("/api/movies/550/rating").send({ score: 8 })).body.rating.score).toBe(8);
     const updated = await owner.post("/api/movies/550/rating").send({ score: 10 });
     expect(updated.body.rating.score).toBe(10);

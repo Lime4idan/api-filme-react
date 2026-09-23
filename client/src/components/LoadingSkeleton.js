@@ -15,6 +15,6 @@ const Card = styled.div`
   animation: ${shimmer} 1.35s infinite linear;
 `;
 
-export default function LoadingSkeleton({ count = 10, label = "Carregando filmes" }) {
+export default function LoadingSkeleton({ count = 10, label = "Loading movies" }) {
   return <Grid role="status" aria-label={label}>{Array.from({ length: count }, (_, index) => <Card key={index} />)}</Grid>;
 }

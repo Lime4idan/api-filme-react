@@ -83,18 +83,18 @@ export default function SearchBar({ compact = false }) {
     <Wrap ref={root} $compact={compact}>
       <form role="search" onSubmit={(event) => { event.preventDefault(); submit(); }}>
         <Search className="icon" size={19} />
-        <label htmlFor={compact ? "global-search-mobile" : "global-search"} style={{ position: "absolute", left: -9999 }}>Pesquisar filmes</label>
-        <input ref={input} id={compact ? "global-search-mobile" : "global-search"} value={value} onChange={(event) => { setValue(event.target.value); setOpen(true); }} onKeyDown={(event) => { if (event.key === "Enter") { event.preventDefault(); submit(event.currentTarget.value); } }} onFocus={() => setOpen(true)} placeholder="Busque filmes, sagas e histórias..." autoComplete="off" />
-        {value && <button className="clear" type="button" onClick={() => { setValue(""); setSuggestions([]); }} aria-label="Limpar busca"><X size={17} /></button>}
+        <label htmlFor={compact ? "global-search-mobile" : "global-search"} style={{ position: "absolute", left: -9999 }}>Search movies</label>
+        <input ref={input} id={compact ? "global-search-mobile" : "global-search"} value={value} onChange={(event) => { setValue(event.target.value); setOpen(true); }} onKeyDown={(event) => { if (event.key === "Enter") { event.preventDefault(); submit(event.currentTarget.value); } }} onFocus={() => setOpen(true)} placeholder="Search movies, franchises, and stories..." autoComplete="off" />
+        {value && <button className="clear" type="button" onClick={() => { setValue(""); setSuggestions([]); }} aria-label="Clear search"><X size={17} /></button>}
         {!value && <span className="shortcut">⌘ K</span>}
-        <button className="submit" aria-label="Pesquisar">{loading ? <LoaderCircle className="spinner" size={17} /> : <Search size={17} />}</button>
+        <button className="submit" aria-label="Search">{loading ? <LoaderCircle className="spinner" size={17} /> : <Search size={17} />}</button>
       </form>
       {open && (value.trim().length >= 2 || history.length > 0) && (
-        <div className="dropdown" role="listbox" aria-label="Sugestões de pesquisa">
+        <div className="dropdown" role="listbox" aria-label="Search suggestions">
           {loading && <div className="hint">Procurando...</div>}
           {!value.trim() && history.length > 0 && <><div className="hint">Pesquisas recentes</div>{history.map((item) => <button key={item} className="suggestion history" onClick={() => { setValue(item); submit(item); }}><Clock3 size={17} /><strong>{item}</strong></button>)}</>}
           {value.trim() && suggestions.map((movie) => <button key={movie.id} className="suggestion" onClick={() => { setOpen(false); navigate(`/filme/${movie.id}`); }}>{imageUrl(movie.poster_path, "w92") ? <img src={imageUrl(movie.poster_path, "w92")} alt="" /> : <span /> }<strong>{movie.title}</strong><span>{movieYear(movie.release_date)}</span></button>)}
-          {!loading && value.trim().length >= 2 && !suggestions.length && <div className="hint">Nenhuma sugestão encontrada</div>}
+          {!loading && value.trim().length >= 2 && !suggestions.length && <div className="hint">No suggestions found</div>}
         </div>
       )}
     </Wrap>

@@ -24,7 +24,7 @@ const issueSession = (res, user) => {
 const register = async (req, res) => {
   const { name, email, password } = req.body;
   const existing = await prisma.user.findUnique({ where: { email } });
-  if (existing) throw new AppError(409, "EMAIL_IN_USE", "Este e-mail já está cadastrado");
+  if (existing) throw new AppError(409, "EMAIL_IN_USE", "This email is already registered");
 
   const passwordHash = await bcrypt.hash(password, 12);
   const user = await prisma.user.create({ data: { name, email, passwordHash } });
@@ -36,8 +36,8 @@ const login = async (req, res) => {
   const { email, password } = req.body;
   const user = await prisma.user.findUnique({ where: { email } });
   const valid = user ? await bcrypt.compare(password, user.passwordHash) : false;
-  if (!valid) throw new AppError(401, "INVALID_CREDENTIALS", "E-mail ou senha inválidos");
-  if (!user.isActive) throw new AppError(403, "USER_INACTIVE", "Esta conta está desativada");
+  if (!valid) throw new AppError(401, "INVALID_CREDENTIALS", "Invalid email or password");
+  if (!user.isActive) throw new AppError(403, "USER_INACTIVE", "This account is disabled");
 
   issueSession(res, user);
   res.json({ user: publicUser(user) });

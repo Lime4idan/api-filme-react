@@ -15,11 +15,11 @@ function LocationProbe() {
   return <span data-testid="location">{location.pathname}{location.search}</span>;
 }
 
-test("pesquisa ao pressionar Enter e sincroniza a query na URL", async () => {
+test("searches on Enter and synchronizes the URL query", async () => {
   api.get.mockRejectedValue({ status: 401 });
   renderApp(<><SearchBar /><LocationProbe /></>);
 
-  await userEvent.type(screen.getByLabelText("Pesquisar filmes"), "Duna{enter}");
+  await userEvent.type(screen.getByLabelText("Search movies"), "Dune{enter}");
 
-  await waitFor(() => expect(screen.getByTestId("location")).toHaveTextContent("/pesquisa?query=Duna&page=1"));
+  await waitFor(() => expect(screen.getByTestId("location")).toHaveTextContent("/pesquisa?query=Dune&page=1"));
 });

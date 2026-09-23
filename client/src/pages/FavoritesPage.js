@@ -7,5 +7,5 @@ import { asMovie } from "../utils/movie";
 
 export default function FavoritesPage() {
   const { items, loading } = useFavorites();
-  return <Page><PageHeader><div><Eyebrow>Sua curadoria</Eyebrow><h1>Meus favoritos</h1><p>Os filmes que você não quer perder de vista, salvos de forma privada na sua conta.</p></div></PageHeader>{loading ? <LoadingSkeleton /> : items.length ? <MovieGrid movies={items.map(asMovie)} /> : <EmptyState title="Sua lista está esperando" message="Explore o catálogo e use o coração para guardar os filmes que chamarem sua atenção." />}</Page>;
+  return <Page><PageHeader><div><Eyebrow>Your curation</Eyebrow><h1>My favorites</h1><p>Movies you want to keep close, saved privately to your account.</p></div></PageHeader>{loading ? <LoadingSkeleton /> : items.length ? <MovieGrid movies={items.map(asMovie)} /> : <EmptyState title="Your list is waiting" message="Explore the catalog and use the heart to save movies that catch your attention." />}</Page>;
 }

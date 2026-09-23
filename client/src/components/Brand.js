@@ -33,7 +33,7 @@ const Wordmark = styled(Link)`
 `;
 
 export default function Brand({ className, compact = false, onClick }) {
-  return <Wordmark className={className} to="/" onClick={onClick} aria-label="MovieHub — início">
+  return <Wordmark className={className} to="/" onClick={onClick} aria-label="MovieHub — home">
     <span className="mark"><Clapperboard size={20} /></span>
     {!compact && <span>Movie<span className="hub">Hub</span></span>}
   </Wordmark>;

@@ -34,10 +34,10 @@ export default function RatingSelector({ movieId }) {
     else setMine(null);
   }, [movieId, user]);
   const rate = async (score) => {
-    try { const { data } = await api.post(`/movies/${movieId}/rating`, { score }); setMine(score); setStats({ average: data.average, count: data.count }); toast.success(`Sua nota ${score} foi salva`); } catch (error) { toast.error(error.message); }
+    try { const { data } = await api.post(`/movies/${movieId}/rating`, { score }); setMine(score); setStats({ average: data.average, count: data.count }); toast.success(`Your ${score}/10 rating was saved`); } catch (error) { toast.error(error.message); }
   };
   const remove = async () => {
-    try { await api.delete(`/movies/${movieId}/rating`); setMine(null); const { data } = await api.get(`/movies/${movieId}/ratings`); setStats(data); toast.success("Avaliação removida"); } catch (error) { toast.error(error.message); }
+    try { await api.delete(`/movies/${movieId}/rating`); setMine(null); const { data } = await api.get(`/movies/${movieId}/ratings`); setStats(data); toast.success("Rating removed"); } catch (error) { toast.error(error.message); }
   };
-  return <Wrap><div className="top"><div><h3><Star size={18} fill="#f8c65c" color="#f8c65c" /> Comunidade MovieHub</h3><p>{stats.count ? `${Number(stats.average).toFixed(1)}/10 · ${stats.count} ${stats.count === 1 ? "avaliação" : "avaliações"}` : "Seja a primeira pessoa a avaliar"}</p></div>{mine && <button className="remove" onClick={remove} aria-label="Remover minha avaliação"><Trash2 size={18} /></button>}</div>{user ? <div className="scores" aria-label="Escolha sua nota">{Array.from({ length: 10 }, (_, index) => index + 1).map((score) => <ScoreButton key={score} $active={mine === score} onClick={() => rate(score)} aria-pressed={mine === score} aria-label={`Dar nota ${score}`}>{score}</ScoreButton>)}</div> : <p style={{ marginTop: 16 }}>Entre na sua conta para dar uma nota.</p>}</Wrap>;
+  return <Wrap><div className="top"><div><h3><Star size={18} fill="#f8c65c" color="#f8c65c" /> MovieHub community</h3><p>{stats.count ? `${Number(stats.average).toFixed(1)}/10 · ${stats.count} ${stats.count === 1 ? "rating" : "ratings"}` : "Be the first to rate this movie"}</p></div>{mine && <button className="remove" onClick={remove} aria-label="Remove my rating"><Trash2 size={18} /></button>}</div>{user ? <div className="scores" aria-label="Choose your rating">{Array.from({ length: 10 }, (_, index) => index + 1).map((score) => <ScoreButton key={score} $active={mine === score} onClick={() => rate(score)} aria-pressed={mine === score} aria-label={`Rate ${score}`}>{score}</ScoreButton>)}</div> : <p style={{ marginTop: 16 }}>Sign in to rate this movie.</p>}</Wrap>;
 }

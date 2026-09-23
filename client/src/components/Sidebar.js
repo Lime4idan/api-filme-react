@@ -23,12 +23,12 @@ const Aside = styled.aside`
 `;
 
 export const mainLinks = [
-  ["/", "Início", Home, true], ["/melhores-avaliados", "Melhores avaliados", Star],
-  ["/lancamentos", "Lançamentos", Sparkles], ["/em-cartaz", "Em cartaz", CalendarDays],
-  ["/minha-lista", "Favoritos", Heart], ["/listas", "Minhas listas", ListVideo],
+  ["/", "Home", Home, true], ["/melhores-avaliados", "Top rated", Star],
+  ["/lancamentos", "Upcoming", Sparkles], ["/em-cartaz", "Now playing", CalendarDays],
+  ["/minha-lista", "Favorites", Heart], ["/listas", "My lists", ListVideo],
 ];
 
 export default function Sidebar() {
   const { user } = useAuth();
-  return <Aside><Brand className="brand" /><nav aria-label="Navegação principal"><span className="section-label">Descobrir</span>{mainLinks.slice(0, 4).map(([to, label, Icon, end]) => <NavLink key={to} to={to} end={end}><Icon size={18} />{label}</NavLink>)}<span className="section-label" style={{ marginTop: 17 }}>Biblioteca</span>{mainLinks.slice(4).map(([to, label, Icon, end]) => <NavLink key={to} to={to} end={end}><Icon size={18} />{label}</NavLink>)}{user?.role === "ADMIN" && <NavLink to="/admin"><Shield size={18} />Administração</NavLink>}<GenreMenu /></nav><div className="footer"><strong>Seu universo de cinema</strong><span>Salve, avalie e compartilhe histórias que merecem ser lembradas.</span></div></Aside>;
+  return <Aside><Brand className="brand" /><nav aria-label="Main navigation"><span className="section-label">Discover</span>{mainLinks.slice(0, 4).map(([to, label, Icon, end]) => <NavLink key={to} to={to} end={end}><Icon size={18} />{label}</NavLink>)}<span className="section-label" style={{ marginTop: 17 }}>Library</span>{mainLinks.slice(4).map(([to, label, Icon, end]) => <NavLink key={to} to={to} end={end}><Icon size={18} />{label}</NavLink>)}{user?.role === "ADMIN" && <NavLink to="/admin"><Shield size={18} />Administration</NavLink>}<GenreMenu /></nav><div className="footer"><strong>Your world of cinema</strong><span>Save, rate, and share stories worth remembering.</span></div></Aside>;
 }

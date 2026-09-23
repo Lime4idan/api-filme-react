@@ -6,7 +6,7 @@ const validate = (schema, source = "body") => (req, _res, next) => {
     return next(new AppError(
       400,
       "VALIDATION_ERROR",
-      "Dados inválidos",
+      "Invalid data",
       result.error.issues.map((issue) => ({
         field: issue.path.join("."),
         message: issue.message,

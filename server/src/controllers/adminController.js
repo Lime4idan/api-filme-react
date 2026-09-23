@@ -24,17 +24,17 @@ const dashboard = async (_req, res) => {
 
 const deleteComment = async (req, res) => {
   const result = await prisma.comment.deleteMany({ where: { id: Number(req.params.id) } });
-  if (!result.count) throw new AppError(404, "COMMENT_NOT_FOUND", "Comentário não encontrado");
+  if (!result.count) throw new AppError(404, "COMMENT_NOT_FOUND", "Comment not found");
   res.status(204).send();
 };
 
 const updateUserStatus = async (req, res) => {
   const userId = Number(req.params.id);
   if (userId === req.user.id && req.body.isActive === false) {
-    throw new AppError(400, "CANNOT_DISABLE_SELF", "Você não pode desativar a própria conta");
+    throw new AppError(400, "CANNOT_DISABLE_SELF", "You cannot disable your own account");
   }
   const existing = await prisma.user.findUnique({ where: { id: userId } });
-  if (!existing) throw new AppError(404, "USER_NOT_FOUND", "Usuário não encontrado");
+  if (!existing) throw new AppError(404, "USER_NOT_FOUND", "User not found");
   const user = await prisma.user.update({
     where: { id: userId },
     data: { isActive: req.body.isActive },

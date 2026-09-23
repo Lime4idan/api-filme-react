@@ -10,7 +10,7 @@ const getPublicList = async (req, res) => {
       _count: { select: { items: true } },
     },
   });
-  if (!list) throw new AppError(404, "PUBLIC_LIST_NOT_FOUND", "Lista pública não encontrada");
+  if (!list) throw new AppError(404, "PUBLIC_LIST_NOT_FOUND", "Public list not found");
   res.json({ list });
 };
 

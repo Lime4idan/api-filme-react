@@ -11,7 +11,7 @@ jest.mock("../services/api", () => ({
 
 test("redireciona visitante para o login", async () => {
   api.get.mockRejectedValue({ status: 401 });
-  renderApp(<Routes><Route path="/privada" element={<ProtectedRoute><div>Conteúdo privado</div></ProtectedRoute>} /><Route path="/login" element={<div>Tela de login</div>} /></Routes>, { route: "/privada" });
-  expect(await screen.findByText("Tela de login")).toBeInTheDocument();
-  expect(screen.queryByText("Conteúdo privado")).not.toBeInTheDocument();
+  renderApp(<Routes><Route path="/private" element={<ProtectedRoute><div>Private content</div></ProtectedRoute>} /><Route path="/login" element={<div>Login screen</div>} /></Routes>, { route: "/private" });
+  expect(await screen.findByText("Login screen")).toBeInTheDocument();
+  expect(screen.queryByText("Private content")).not.toBeInTheDocument();
 });

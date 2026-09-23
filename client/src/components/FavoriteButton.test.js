@@ -9,16 +9,16 @@ jest.mock("../services/api", () => ({
   default: { get: jest.fn(), post: jest.fn(), delete: jest.fn(), put: jest.fn() },
 }));
 
-test("salva favorito no backend para usuário autenticado", async () => {
+test("saves a favorite for an authenticated user", async () => {
   api.get.mockImplementation((path) => {
     if (path === "/auth/me") return Promise.resolve({ data: { user: { id: 1, name: "Ana", role: "USER" } } });
     if (path === "/favorites") return Promise.resolve({ data: { items: [] } });
-    return Promise.reject(new Error("rota inesperada"));
+    return Promise.reject(new Error("unexpected route"));
   });
-  api.post.mockResolvedValue({ data: { favorite: { id: 1, tmdbMovieId: 550, title: "Clube da Luta" } } });
-  renderApp(<FavoriteButton movie={{ id: 550, title: "Clube da Luta", vote_average: 8.4 }} />);
+  api.post.mockResolvedValue({ data: { favorite: { id: 1, tmdbMovieId: 550, title: "Fight Club" } } });
+  renderApp(<FavoriteButton movie={{ id: 550, title: "Fight Club", vote_average: 8.4 }} />);
   await waitFor(() => expect(api.get).toHaveBeenCalledWith("/favorites", { params: { limit: 50 } }));
-  const button = await screen.findByRole("button", { name: "Adicionar Clube da Luta aos favoritos" });
+  const button = await screen.findByRole("button", { name: "Add Fight Club to favorites" });
   await userEvent.click(button);
-  await waitFor(() => expect(api.post).toHaveBeenCalledWith("/favorites", expect.objectContaining({ tmdbMovieId: 550, title: "Clube da Luta" })));
+  await waitFor(() => expect(api.post).toHaveBeenCalledWith("/favorites", expect.objectContaining({ tmdbMovieId: 550, title: "Fight Club" })));
 });

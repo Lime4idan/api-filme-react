@@ -16,5 +16,5 @@ export default function GenreMenu({ onNavigate }) {
   const [genres, setGenres] = useState([]);
   useEffect(() => { movieService.genres().then((data) => setGenres(data.genres || [])).catch(() => {}); }, []);
   if (!genres.length) return null;
-  return <Menu><span className="label">Gêneros</span>{genres.slice(0, 8).map((genre) => <NavLink key={genre.id} to={`/categoria/${genre.id}`} onClick={onNavigate}>{genre.name}</NavLink>)}</Menu>;
+  return <Menu><span className="label">Genres</span>{genres.slice(0, 8).map((genre) => <NavLink key={genre.id} to={`/categoria/${genre.id}`} onClick={onNavigate}>{genre.name}</NavLink>)}</Menu>;
 }

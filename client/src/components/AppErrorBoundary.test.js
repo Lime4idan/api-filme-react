@@ -5,10 +5,10 @@ import { theme } from "../styles/GlobalStyles";
 import AppErrorBoundary from "./AppErrorBoundary";
 
 function BrokenView() {
-  throw new Error("falha simulada");
+  throw new Error("simulated failure");
 }
 
-test("substitui uma falha de renderização por uma recuperação visível", () => {
+test("replaces a rendering failure with a visible recovery screen", () => {
   const consoleError = jest.spyOn(console, "error").mockImplementation(() => {});
 
   render(
@@ -20,7 +20,7 @@ test("substitui uma falha de renderização por uma recuperação visível", () 
   );
 
   expect(screen.getByRole("alert")).toBeInTheDocument();
-  expect(screen.getByRole("heading", { name: "A sessão saiu do roteiro." })).toBeInTheDocument();
-  expect(screen.getByRole("button", { name: "Recarregar MovieHub" })).toBeInTheDocument();
+  expect(screen.getByRole("heading", { name: "This session went off script." })).toBeInTheDocument();
+  expect(screen.getByRole("button", { name: "Reload MovieHub" })).toBeInTheDocument();
   consoleError.mockRestore();
 });

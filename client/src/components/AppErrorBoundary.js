@@ -42,6 +42,6 @@ export default class AppErrorBoundary extends Component {
   render() {
     if (!this.state.hasError) return this.props.children;
 
-    return <Screen><Card role="alert"><Brand /><span className="code">Erro de inicialização</span><h1>A sessão saiu do roteiro.</h1><p>O MovieHub encontrou um problema inesperado. Recarregue a aplicação para começar uma nova sessão.</p><Button onClick={() => window.location.reload()}>Recarregar MovieHub</Button></Card></Screen>;
+    return <Screen><Card role="alert"><Brand /><span className="code">Startup error</span><h1>This session went off script.</h1><p>MovieHub encountered an unexpected problem. Reload the application to begin a new session.</p><Button onClick={() => window.location.reload()}>Reload MovieHub</Button></Card></Screen>;
   }
 }

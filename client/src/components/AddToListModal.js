@@ -29,7 +29,7 @@ export default function AddToListModal({ movie, onClose }) {
 
   const add = async (list) => {
     setBusy(list.id);
-    try { await api.post(`/lists/${list.id}/items`, movieSnapshot(movie)); toast.success(`Adicionado a “${list.name}”`); onClose(); }
+    try { await api.post(`/lists/${list.id}/items`, movieSnapshot(movie)); toast.success(`Added to “${list.name}”`); onClose(); }
     catch (error) { toast.error(error.message); }
     finally { setBusy(null); }
   };
@@ -40,10 +40,10 @@ export default function AddToListModal({ movie, onClose }) {
     try {
       const { data } = await api.post("/lists", { name: name.trim(), isPublic: false });
       await api.post(`/lists/${data.list.id}/items`, movieSnapshot(movie));
-      toast.success("Lista criada e filme adicionado");
+      toast.success("List created and movie added");
       onClose();
     } catch (error) { toast.error(error.message); } finally { setBusy(null); }
   };
 
-  return <Overlay onMouseDown={(event) => { if (event.target === event.currentTarget) onClose(); }}><div className="modal" role="dialog" aria-modal="true" aria-labelledby="list-modal-title"><div className="head"><div><h2 id="list-modal-title">Adicionar à lista</h2><p>Organize “{movie.title}” do seu jeito.</p></div><button className="close" onClick={onClose} aria-label="Fechar"><X /></button></div><div className="lists">{lists.map((list) => <button className="list" key={list.id} onClick={() => add(list)} disabled={Boolean(busy)}><span><strong>{list.name}</strong><small>{list._count?.items || 0} filmes · {list.isPublic ? "Pública" : "Privada"}</small></span>{busy === list.id ? "…" : <ListPlus size={19} />}</button>)}</div><Field>Nova lista<div className="create"><input value={name} onChange={(event) => setName(event.target.value)} placeholder="Ex.: Para assistir no fim de semana" maxLength={80} /><Button type="button" onClick={create} disabled={!name.trim() || Boolean(busy)}>{busy === "create" ? <Check size={18} /> : <Plus size={18} />} Criar</Button></div></Field></div></Overlay>;
+  return <Overlay onMouseDown={(event) => { if (event.target === event.currentTarget) onClose(); }}><div className="modal" role="dialog" aria-modal="true" aria-labelledby="list-modal-title"><div className="head"><div><h2 id="list-modal-title">Add to list</h2><p>Organize “{movie.title}” your way.</p></div><button className="close" onClick={onClose} aria-label="Close"><X /></button></div><div className="lists">{lists.map((list) => <button className="list" key={list.id} onClick={() => add(list)} disabled={Boolean(busy)}><span><strong>{list.name}</strong><small>{list._count?.items || 0} movies · {list.isPublic ? "Public" : "Private"}</small></span>{busy === list.id ? "…" : <ListPlus size={19} />}</button>)}</div><Field>New list<div className="create"><input value={name} onChange={(event) => setName(event.target.value)} placeholder="e.g. Weekend watchlist" maxLength={80} /><Button type="button" onClick={create} disabled={!name.trim() || Boolean(busy)}>{busy === "create" ? <Check size={18} /> : <Plus size={18} />} Create</Button></div></Field></div></Overlay>;
 }

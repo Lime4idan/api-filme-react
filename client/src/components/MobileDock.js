@@ -27,13 +27,13 @@ const Dock = styled.nav`
 `;
 
 const links = [
-  ["/", "Início", Home, true],
-  ["/pesquisa", "Buscar", Search],
-  ["/minha-lista", "Favoritos", Heart],
-  ["/listas", "Listas", ListVideo],
-  ["/perfil", "Perfil", UserRound],
+  ["/", "Home", Home, true],
+  ["/pesquisa", "Search", Search],
+  ["/minha-lista", "Favorites", Heart],
+  ["/listas", "Lists", ListVideo],
+  ["/perfil", "Profile", UserRound],
 ];
 
 export default function MobileDock() {
-  return <Dock aria-label="Navegação rápida">{links.map(([to, label, Icon, end]) => <NavLink key={to} to={to} end={end}><Icon size={20} /><span>{label}</span></NavLink>)}</Dock>;
+  return <Dock aria-label="Quick navigation">{links.map(([to, label, Icon, end]) => <NavLink key={to} to={to} end={end}><Icon size={20} /><span>{label}</span></NavLink>)}</Dock>;
 }

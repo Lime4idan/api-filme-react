@@ -25,7 +25,7 @@ const updateProfile = async (req, res) => {
 
 const changePassword = async (req, res) => {
   const valid = await bcrypt.compare(req.body.currentPassword, req.user.passwordHash);
-  if (!valid) throw new AppError(400, "INVALID_CURRENT_PASSWORD", "A senha atual está incorreta");
+  if (!valid) throw new AppError(400, "INVALID_CURRENT_PASSWORD", "The current password is incorrect");
   const passwordHash = await bcrypt.hash(req.body.newPassword, 12);
   await prisma.user.update({ where: { id: req.user.id }, data: { passwordHash } });
   res.status(204).send();
@@ -46,7 +46,7 @@ const getPublicProfile = async (req, res) => {
       },
     },
   });
-  if (!user) throw new AppError(404, "USER_NOT_FOUND", "Usuário não encontrado");
+  if (!user) throw new AppError(404, "USER_NOT_FOUND", "User not found");
   res.json({
     user: {
       id: user.id,

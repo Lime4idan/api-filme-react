@@ -40,11 +40,11 @@ export default function MovieCard({ movie, showFavorite = true, rank }) {
   return (
     <Card data-testid="movie-card" className={rank ? "ranked" : undefined}>
       {rank && <span className="rank" aria-hidden="true">{rank}</span>}
-      <Link className="poster" to={`/filme/${id}`} aria-label={`Ver detalhes de ${movie.title}`}>
-        {poster ? <img src={poster} alt={`Pôster de ${movie.title}`} loading="lazy" onError={(event) => { event.currentTarget.style.display = "none"; event.currentTarget.nextElementSibling.hidden = false; }} /> : null}
-        <Placeholder hidden={Boolean(poster)} aria-label="Pôster indisponível"><Film size={36} /></Placeholder>
+      <Link className="poster" to={`/filme/${id}`} aria-label={`View details for ${movie.title}`}>
+        {poster ? <img src={poster} alt={`Poster for ${movie.title}`} loading="lazy" onError={(event) => { event.currentTarget.style.display = "none"; event.currentTarget.nextElementSibling.hidden = false; }} /> : null}
+        <Placeholder hidden={Boolean(poster)} aria-label="Poster unavailable"><Film size={36} /></Placeholder>
         <span className="score"><Star size={12} fill="currentColor" />{Number((movie.vote_average ?? movie.voteAverage) || 0).toFixed(1)}</span>
-        <span className="quick">Ver detalhes <ArrowUpRight size={17} /></span>
+        <span className="quick">View details <ArrowUpRight size={17} /></span>
       </Link>
       {showFavorite && <FavoriteButton className="favorite" movie={{ ...movie, id }} compact />}
       <Link to={`/filme/${id}`}><h3 title={movie.title}>{movie.title}</h3></Link>

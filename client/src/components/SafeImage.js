@@ -14,6 +14,6 @@ const Missing = styled.div`
 export default function SafeImage({ src, alt, className, fallback, ...props }) {
   const [failed, setFailed] = useState(false);
   useEffect(() => setFailed(false), [src]);
-  if (!src || failed) return <Missing className={className} role="img" aria-label={alt || "Imagem indisponível"}>{fallback || <Film size={30} />}</Missing>;
+  if (!src || failed) return <Missing className={className} role="img" aria-label={alt || "Image unavailable"}>{fallback || <Film size={30} />}</Missing>;
   return <img className={className} src={src} alt={alt} onError={() => setFailed(true)} {...props} />;
 }

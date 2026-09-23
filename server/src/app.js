@@ -23,7 +23,7 @@ app.use(helmet({ contentSecurityPolicy: false, crossOriginResourcePolicy: { poli
 app.use(cors({
   origin(origin, callback) {
     if (!origin || allowedOrigins.includes(origin.replace(/\/$/, ""))) return callback(null, true);
-    return callback(new AppError(403, "CORS_FORBIDDEN", "Origem não permitida"));
+    return callback(new AppError(403, "CORS_FORBIDDEN", "Origin not allowed"));
   },
   credentials: true,
 }));

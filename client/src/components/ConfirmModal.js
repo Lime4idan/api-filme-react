@@ -12,7 +12,7 @@ const Overlay = styled.div`
   .actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 27px; }
 `;
 
-export default function ConfirmModal({ title = "Confirmar ação", message, confirmLabel = "Confirmar", onConfirm, onClose, danger = true }) {
+export default function ConfirmModal({ title = "Confirm action", message, confirmLabel = "Confirm", onConfirm, onClose, danger = true }) {
   useEffect(() => { document.body.classList.add("modal-open"); return () => document.body.classList.remove("modal-open"); }, []);
-  return <Overlay onMouseDown={(event) => { if (event.currentTarget === event.target) onClose(); }}><div className="modal" role="alertdialog" aria-modal="true" aria-labelledby="confirm-title"><div className="head"><h2 id="confirm-title">{title}</h2><button className="close" onClick={onClose} aria-label="Fechar"><X /></button></div><p>{message}</p><div className="actions"><Button $variant="ghost" onClick={onClose}>Cancelar</Button><Button $variant={danger ? "danger" : undefined} onClick={onConfirm}>{confirmLabel}</Button></div></div></Overlay>;
+  return <Overlay onMouseDown={(event) => { if (event.currentTarget === event.target) onClose(); }}><div className="modal" role="alertdialog" aria-modal="true" aria-labelledby="confirm-title"><div className="head"><h2 id="confirm-title">{title}</h2><button className="close" onClick={onClose} aria-label="Close"><X /></button></div><p>{message}</p><div className="actions"><Button $variant="ghost" onClick={onClose}>Cancel</Button><Button $variant={danger ? "danger" : undefined} onClick={onConfirm}>{confirmLabel}</Button></div></div></Overlay>;
 }

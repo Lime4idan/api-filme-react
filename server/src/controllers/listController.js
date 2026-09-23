@@ -7,7 +7,7 @@ const ensureOwnedList = async (listId, userId, includeItems = false) => {
     where: { id: Number(listId), userId },
     include: includeItems ? { items: { orderBy: { position: "asc" } } } : undefined,
   });
-  if (!list) throw new AppError(404, "LIST_NOT_FOUND", "Lista não encontrada");
+  if (!list) throw new AppError(404, "LIST_NOT_FOUND", "List not found");
   return list;
 };
 
@@ -55,7 +55,7 @@ const addItem = async (req, res) => {
   const existing = await prisma.movieListItem.findUnique({
     where: { listId_tmdbMovieId: { listId: list.id, tmdbMovieId: req.body.tmdbMovieId } },
   });
-  if (existing) throw new AppError(409, "LIST_ITEM_EXISTS", "Este filme já está na lista");
+  if (existing) throw new AppError(409, "LIST_ITEM_EXISTS", "This movie is already in the list");
   const aggregate = await prisma.movieListItem.aggregate({ where: { listId: list.id }, _max: { position: true } });
   const item = await prisma.movieListItem.create({
     data: { ...req.body, listId: list.id, position: (aggregate._max.position ?? -1) + 1 },
@@ -68,7 +68,7 @@ const removeItem = async (req, res) => {
   const result = await prisma.movieListItem.deleteMany({
     where: { listId: list.id, tmdbMovieId: Number(req.params.tmdbMovieId) },
   });
-  if (!result.count) throw new AppError(404, "LIST_ITEM_NOT_FOUND", "Filme não encontrado na lista");
+  if (!result.count) throw new AppError(404, "LIST_ITEM_NOT_FOUND", "Movie not found in the list");
   res.status(204).send();
 };
 
@@ -77,7 +77,7 @@ const reorder = async (req, res) => {
   const currentIds = list.items.map((item) => item.tmdbMovieId).sort((a, b) => a - b);
   const receivedIds = [...req.body.movieIds].sort((a, b) => a - b);
   if (currentIds.length !== receivedIds.length || currentIds.some((id, index) => id !== receivedIds[index])) {
-    throw new AppError(400, "INVALID_REORDER", "A nova ordem deve conter todos os filmes da lista");
+    throw new AppError(400, "INVALID_REORDER", "The new order must include every movie in the list");
   }
   await prisma.$transaction(req.body.movieIds.map((tmdbMovieId, position) => prisma.movieListItem.update({
     where: { listId_tmdbMovieId: { listId: list.id, tmdbMovieId } },

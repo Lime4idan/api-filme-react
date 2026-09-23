@@ -23,19 +23,19 @@ const normalizePage = (data) => ({
 
 const request = async (path, params = {}) => {
   if (!process.env.TMDB_API_KEY) {
-    throw new AppError(503, "TMDB_NOT_CONFIGURED", "A integração com o TMDB ainda não foi configurada");
+    throw new AppError(503, "TMDB_NOT_CONFIGURED", "The TMDB integration has not been configured yet");
   }
   try {
     const { data } = await client.get(path, {
-      params: { api_key: process.env.TMDB_API_KEY, language: "pt-BR", ...params },
+      params: { api_key: process.env.TMDB_API_KEY, language: "en-US", ...params },
     });
     return data;
   } catch (error) {
     if (error.code === "ECONNABORTED") {
-      throw new AppError(504, "TMDB_TIMEOUT", "O TMDB demorou demais para responder");
+      throw new AppError(504, "TMDB_TIMEOUT", "TMDB took too long to respond");
     }
     const status = error.response?.status === 404 ? 404 : 502;
-    throw new AppError(status, status === 404 ? "MOVIE_NOT_FOUND" : "TMDB_ERROR", status === 404 ? "Filme não encontrado" : "Não foi possível consultar o TMDB");
+    throw new AppError(status, status === 404 ? "MOVIE_NOT_FOUND" : "TMDB_ERROR", status === 404 ? "Movie not found" : "Could not query TMDB");
   }
 };
 
@@ -43,7 +43,7 @@ const cachedRequest = (key, ttl, path, params) => cache.remember(key, ttl, () =>
 
 const getCollection = async (collection, page = 1) => {
   const allowed = new Set(["popular", "top_rated", "upcoming", "now_playing"]);
-  if (!allowed.has(collection)) throw new AppError(404, "COLLECTION_NOT_FOUND", "Coleção não encontrada");
+  if (!allowed.has(collection)) throw new AppError(404, "COLLECTION_NOT_FOUND", "Collection not found");
   const data = await cachedRequest(`collection:${collection}:${page}`, TTL.collection, `/movie/${collection}`, { page });
   return normalizePage(data);
 };
@@ -64,7 +64,7 @@ const getVideos = async (id) => {
 };
 
 const getRelated = async (id, type, page = 1) => {
-  if (!["recommendations", "similar"].includes(type)) throw new AppError(400, "INVALID_RELATED_TYPE", "Tipo inválido");
+  if (!["recommendations", "similar"].includes(type)) throw new AppError(400, "INVALID_RELATED_TYPE", "Invalid type");
   return normalizePage(await cachedRequest(`${type}:${id}:${page}`, TTL.collection, `/movie/${id}/${type}`, { page }));
 };
 
@@ -79,7 +79,7 @@ const sortResults = (movies, sort) => {
 };
 
 const search = async ({ query, page = 1, genre, year, voteMin, language, sort }) => {
-  if (!query?.trim()) throw new AppError(400, "VALIDATION_ERROR", "Informe um título para pesquisar");
+  if (!query?.trim()) throw new AppError(400, "VALIDATION_ERROR", "Enter a title to search for");
   const key = `search:${JSON.stringify({ query, page, genre, year, voteMin, language, sort })}`;
   return cache.remember(key, TTL.search, async () => {
     const advanced = genre || voteMin || language || sort;

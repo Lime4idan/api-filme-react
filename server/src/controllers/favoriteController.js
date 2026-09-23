@@ -16,7 +16,7 @@ const create = async (req, res) => {
   const existing = await prisma.favorite.findUnique({
     where: { userId_tmdbMovieId: { userId: req.user.id, tmdbMovieId: req.body.tmdbMovieId } },
   });
-  if (existing) throw new AppError(409, "FAVORITE_EXISTS", "Este filme já está nos favoritos");
+  if (existing) throw new AppError(409, "FAVORITE_EXISTS", "This movie is already in your favorites");
   const favorite = await prisma.favorite.create({ data: { ...req.body, userId: req.user.id } });
   res.status(201).json({ favorite });
 };
@@ -25,7 +25,7 @@ const remove = async (req, res) => {
   const result = await prisma.favorite.deleteMany({
     where: { userId: req.user.id, tmdbMovieId: Number(req.params.tmdbMovieId) },
   });
-  if (!result.count) throw new AppError(404, "FAVORITE_NOT_FOUND", "Favorito não encontrado");
+  if (!result.count) throw new AppError(404, "FAVORITE_NOT_FOUND", "Favorite not found");
   res.status(204).send();
 };
 

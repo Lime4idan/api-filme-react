@@ -48,7 +48,7 @@ export function ToastProvider({ children }) {
           <ToastItem key={toast.id} $type={toast.type} role={toast.type === "error" ? "alert" : "status"}>
             {toast.type === "error" ? <CircleAlert size={20} /> : toast.type === "success" ? <CheckCircle2 size={20} /> : <Info size={20} />}
             <p>{toast.message}</p>
-            <button onClick={() => remove(toast.id)} aria-label="Fechar notificação"><X size={18} /></button>
+            <button onClick={() => remove(toast.id)} aria-label="Close notification"><X size={18} /></button>
           </ToastItem>
         ))}
       </Stack>

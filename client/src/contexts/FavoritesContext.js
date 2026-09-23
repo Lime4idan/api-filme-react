@@ -24,7 +24,7 @@ export function FavoritesProvider({ children }) {
   const isFavorite = useCallback((id) => items.some((item) => item.tmdbMovieId === Number(id)), [items]);
 
   const toggle = useCallback(async (movie) => {
-    if (!user) throw new Error("Entre na sua conta para salvar filmes.");
+    if (!user) throw new Error("Sign in to save movies.");
     const snapshot = movieSnapshot(movie);
     const exists = isFavorite(snapshot.tmdbMovieId);
     const previous = items;
@@ -32,11 +32,11 @@ export function FavoritesProvider({ children }) {
     try {
       if (exists) {
         await api.delete(`/favorites/${snapshot.tmdbMovieId}`);
-        toast.success("Removido dos favoritos");
+        toast.success("Removed from favorites");
       } else {
         const { data } = await api.post("/favorites", snapshot);
         setItems((current) => current.map((item) => item.tmdbMovieId === snapshot.tmdbMovieId ? data.favorite : item));
-        toast.success("Filme salvo nos favoritos");
+        toast.success("Movie saved to favorites");
       }
     } catch (error) {
       setItems(previous);

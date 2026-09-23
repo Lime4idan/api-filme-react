@@ -12,7 +12,7 @@ jest.mock("../services/movieService", () => ({
   movieService: { genres: jest.fn(), search: jest.fn() },
 }));
 
-test("consulta a pesquisa a partir da query da URL", async () => {
+test("loads a search from the URL query", async () => {
   api.get.mockRejectedValue({ status: 401 });
   movieService.genres.mockResolvedValue({ genres: [] });
   movieService.search.mockResolvedValue({ page: 1, totalPages: 1, results: [{ id: 550, title: "Clube da Luta", release_date: "1999-10-15", vote_average: 8.4 }] });

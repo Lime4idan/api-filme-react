@@ -18,6 +18,6 @@ const Wrap = styled.div`
   p { max-width: 480px; }
 `;
 
-export default function EmptyState({ title = "Nada por aqui", message, action, actionLabel }) {
-  return <Wrap><div><Clapperboard size={34} /><h2>{title}</h2><p>{message}</p>{action && <Button onClick={action}>{actionLabel || "Continuar"}</Button>}</div></Wrap>;
+export default function EmptyState({ title = "Nothing here yet", message, action, actionLabel }) {
+  return <Wrap><div><Clapperboard size={34} /><h2>{title}</h2><p>{message}</p>{action && <Button onClick={action}>{actionLabel || "Continue"}</Button>}</div></Wrap>;
 }

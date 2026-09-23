@@ -11,13 +11,13 @@ export const movieYear = (date) => {
 };
 
 export const formatDate = (date) => {
-  if (!date) return "Não informada";
+  if (!date) return "Not provided";
   const value = new Date(`${String(date).slice(0, 10)}T12:00:00`);
-  return Number.isNaN(value.getTime()) ? "Não informada" : value.toLocaleDateString("pt-BR");
+  return Number.isNaN(value.getTime()) ? "Not provided" : value.toLocaleDateString("en-US");
 };
 
 export const formatRuntime = (minutes) => {
-  if (!minutes) return "Duração não informada";
+  if (!minutes) return "Runtime not provided";
   const hours = Math.floor(minutes / 60);
   const rest = minutes % 60;
   return `${hours ? `${hours}h ` : ""}${rest}min`;

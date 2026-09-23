@@ -11,9 +11,9 @@ import { movieService } from "../services/movieService";
 import { Eyebrow, Page, PageHeader } from "../styles/ui";
 
 const definitions = {
-  topRated: { title: "Melhores avaliados", eyebrow: "Seleção da comunidade", description: "Filmes que atravessam gêneros e gerações com notas excepcionais.", loader: movieService.topRated },
-  upcoming: { title: "Lançamentos", eyebrow: "Na sua agenda", description: "As próximas estreias para acompanhar de perto.", loader: movieService.upcoming },
-  nowPlaying: { title: "Em cartaz", eyebrow: "Nas telonas", description: "O que está em exibição nos cinemas neste momento.", loader: movieService.nowPlaying },
+  topRated: { title: "Top rated", eyebrow: "Community favorites", description: "Exceptional movies that transcend genres and generations.", loader: movieService.topRated },
+  upcoming: { title: "Upcoming", eyebrow: "On your calendar", description: "The next releases worth keeping on your radar.", loader: movieService.upcoming },
+  nowPlaying: { title: "Now playing", eyebrow: "On the big screen", description: "Movies currently playing in theaters.", loader: movieService.nowPlaying },
 };
 
 const CatalogueHeader = styled(PageHeader)`
@@ -56,6 +56,6 @@ export default function CollectionPage({ type }) {
   }, [genreId, type, searchParams.toString()]); // eslint-disable-line react-hooks/exhaustive-deps
   const update = (next) => { const params = new URLSearchParams(); Object.entries(next).forEach(([key, value]) => { if (value && !(key === "sort" && value === "popularity")) params.set(key, value); }); setSearchParams(params); };
   const title = genreId ? (genre?.name || "Categoria") : definition.title;
-  const description = genreId ? `Explore filmes de ${genre?.name || "deste gênero"}, com filtros que consultam o catálogo completo.` : definition.description;
-  return <Page><CatalogueHeader><div><Eyebrow>{genreId ? "Explore por gênero" : definition.eyebrow}</Eyebrow><h1>{title}</h1><p>{description}</p></div><div className="catalog-meta"><strong>{data?.totalResults?.toLocaleString("pt-BR") || "∞"}</strong><span>histórias para descobrir</span></div></CatalogueHeader><FilterBar filters={filters} genres={genres} showGenre={!genreId} onChange={update} />{loading ? <LoadingSkeleton /> : error ? <ErrorState message={error} retry={() => update({ ...filters })} /> : data?.results?.length ? <><MovieGrid movies={data.results} /><Pagination page={data.page} totalPages={data.totalPages} onChange={(page) => update({ ...filters, page })} /></> : <EmptyState title="Nenhum filme encontrado" message="Tente remover um filtro ou escolher outro período." />}</Page>;
+  const description = genreId ? `Explore ${genre?.name || "this genre"} movies with filters across the full catalog.` : definition.description;
+  return <Page><CatalogueHeader><div><Eyebrow>{genreId ? "Explore by genre" : definition.eyebrow}</Eyebrow><h1>{title}</h1><p>{description}</p></div><div className="catalog-meta"><strong>{data?.totalResults?.toLocaleString("en-US") || "∞"}</strong><span>stories to discover</span></div></CatalogueHeader><FilterBar filters={filters} genres={genres} showGenre={!genreId} onChange={update} />{loading ? <LoadingSkeleton /> : error ? <ErrorState message={error} retry={() => update({ ...filters })} /> : data?.results?.length ? <><MovieGrid movies={data.results} /><Pagination page={data.page} totalPages={data.totalPages} onChange={(page) => update({ ...filters, page })} /></> : <EmptyState title="No movies found" message="Try removing a filter or choosing a different period." />}</Page>;
 }
