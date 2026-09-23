@@ -1,25 +1,49 @@
-# MovieHub
+<div align="center">
 
-MovieHub is a full-stack platform for discovering, rating, and organizing movies. Catalog data comes from TMDB through a secure backend proxy, while accounts, favorites, lists, comments, likes, ratings, and profiles are stored in the application database.
+# 🎬 MovieHub
 
-The project evolved from a simple React interface into a responsive, production-oriented application while preserving its dark navy-and-purple cinematic identity.
+Discover, rate, organize, and share the movies that become part of your story.
+
+<p>
+  <img alt="React" src="https://img.shields.io/badge/Frontend-React-61DAFB?style=for-the-badge&logo=react&logoColor=111827">
+  <img alt="Express" src="https://img.shields.io/badge/Backend-Express-303846?style=for-the-badge&logo=express&logoColor=white">
+  <img alt="Prisma" src="https://img.shields.io/badge/ORM-Prisma-5A67D8?style=for-the-badge&logo=prisma&logoColor=white">
+  <img alt="TMDB" src="https://img.shields.io/badge/Data-TMDB-01B4E4?style=for-the-badge&logo=themoviedatabase&logoColor=white">
+  <img alt="AI" src="https://img.shields.io/badge/Built%20with-100%25%20AI-B39BC8?style=for-the-badge">
+</p>
+
+A full-stack movie platform with discovery, accounts, favorites, custom lists, reviews, ratings, recommendations, and moderation tools.
+
+</div>
+
+---
+
+## Academic and AI disclosure
+
+> **MovieHub was created 100% with artificial intelligence as a school project.**
+
+The purpose of the project was to observe and understand how AI systems plan, design, code, and structure a complete website. It serves as an academic experiment in AI-assisted web development, from the interface and user experience to the API, database, tests, and documentation.
+
+MovieHub should therefore be read as both a functional application and a study of how artificial intelligence approaches full-stack product development.
+
+## About MovieHub
+
+MovieHub is a responsive platform for discovering, rating, and organizing movies. Catalog data comes from TMDB through a secure backend proxy, while accounts, favorites, lists, comments, likes, ratings, and profiles are stored in the application database.
+
+The project grew from a simple React interface into a complete full-stack application while preserving its dark, cinematic visual identity.
 
 ## Highlights
 
 - Popular, top-rated, upcoming, now-playing, and genre-based discovery
-- Advanced search with suggestions, a 500 ms debounce, local history, filters, and pagination
+- Advanced search with suggestions, debounce, local history, filters, and pagination
 - Movie details, cast, directors, trailers, recommendations, and similar titles
-- Registration, login, persistent `httpOnly` cookie sessions, logout, and profiles
-- Per-user favorites and custom lists with ordering and public share codes
-- Editable comments, likes, moderation, and community ratings
-- Personalized recommendations based on viewing activity
-- Admin dashboard with metrics, moderation, and account controls
+- Registration, login, persistent `httpOnly` sessions, logout, and public profiles
+- Per-user favorites and custom lists with ordering and shareable public links
+- Editable comments, likes, community ratings, and moderation
+- Personalized recommendations based on user activity
+- Admin dashboard with metrics and account controls
 - OpenAPI documentation at `/api/docs`
-- API integration tests and frontend component/critical-flow tests
-
-## Screenshots
-
-Screenshots should be captured from a local instance connected to a valid TMDB key so this README never presents mock catalog data. Recommended screens are `/`, `/filme/:id`, and `/listas`; save them under `docs/screenshots/`.
+- API integration tests and frontend component tests
 
 ## Architecture
 
@@ -35,15 +59,18 @@ flowchart LR
     A --> W["Swagger UI / OpenAPI"]
 ```
 
-The browser never receives the TMDB key. Every external request passes through `server/src/services/tmdbService.js`, which applies timeouts, normalization, and caching.
+The browser never receives the TMDB key. External catalog requests pass through `server/src/services/tmdbService.js`, which applies timeouts, normalization, language settings, and caching.
 
-## Stack
+## Technology
 
-**Frontend:** React 18, React Router DOM, styled-components, Context API, Axios, Lucide Icons, and Testing Library.
-
-**Backend:** Node.js, Express, Prisma ORM, JWT, bcrypt, Zod, Helmet, CORS, express-rate-limit, Swagger UI, and Jest/Supertest.
-
-**Database:** SQLite for local development, with a separate PostgreSQL schema and migrations for production.
+| Area | Technology |
+| --- | --- |
+| Frontend | React 18, React Router, styled-components, Context API, Axios |
+| Backend | Node.js, Express, JWT, bcrypt, Zod, Helmet, rate limiting |
+| Database | Prisma, SQLite for development, PostgreSQL for production |
+| Movie data | TMDB API |
+| Documentation | Swagger UI and OpenAPI |
+| Testing | Jest, Supertest, and Testing Library |
 
 ## Project structure
 
@@ -78,14 +105,16 @@ moviehub/
 └── README.md
 ```
 
-## Requirements
+## Run locally
+
+### Requirements
 
 - Node.js 18.18 or newer
 - npm 9 or newer
 - A [TMDB API key](https://www.themoviedb.org/settings/api)
-- PostgreSQL for production only; SQLite is enough for development and tests
+- PostgreSQL for production only; SQLite is enough for local development
 
-## Installation
+### Installation
 
 ```bash
 git clone https://github.com/Lime4idan/api-filme-react.git
@@ -93,7 +122,7 @@ cd api-filme-react
 npm install
 ```
 
-The root package uses npm workspaces, so this command installs the client, server, and shared tooling.
+The root package uses npm workspaces, so one installation prepares the client, server, and shared tooling.
 
 ### Environment variables
 
@@ -119,9 +148,9 @@ Create `client/.env` from `client/.env.example`:
 REACT_APP_API_URL=http://localhost:5055/api
 ```
 
-Do not use `REACT_APP_KEY`: variables with that prefix become part of the browser bundle. `.env` files are ignored by Git.
+Never expose the TMDB key through a `REACT_APP_*` variable, because those values become part of the browser bundle. Real `.env` files are ignored by Git.
 
-### Local database and seed
+### Prepare the database
 
 ```bash
 npm run prisma:generate
@@ -129,20 +158,20 @@ npm run prisma:migrate
 npm run prisma:seed
 ```
 
-`prisma:migrate` applies existing migrations without prompts, including in CI. To create a migration during development, run `npm run prisma:migrate:dev -- --name migration_name`.
-
 The seed refuses default passwords when `NODE_ENV=production`.
 
-### Run
+### Start the application
 
 ```bash
 npm run dev
 ```
 
-- Frontend: `http://localhost:3000`
-- API: `http://localhost:5055/api`
-- API documentation: `http://localhost:5055/api/docs`
-- Health check: `http://localhost:5055/api/health`
+| Service | Local address |
+| --- | --- |
+| Frontend | `http://localhost:3000` |
+| REST API | `http://localhost:5055/api` |
+| API documentation | `http://localhost:5055/api/docs` |
+| Health check | `http://localhost:5055/api/health` |
 
 ## Main frontend routes
 
@@ -154,7 +183,7 @@ npm run dev
 | `/melhores-avaliados` | Public | Top-rated movies |
 | `/lancamentos` | Public | Upcoming releases |
 | `/em-cartaz` | Public | Movies currently in theaters |
-| `/pesquisa?query=&page=` | Public | Search and URL-synchronized filters |
+| `/pesquisa?query=&page=` | Public | Search and synchronized filters |
 | `/login` / `/cadastro` | Guest | Authentication |
 | `/perfil` | Private | Profile and password management |
 | `/minha-lista` | Private | Favorites |
@@ -171,4 +200,22 @@ npm run dev
 - Comments and ratings: `/api/movies/:id/comments`, `/api/comments/*`, `/api/movies/:id/rating`
 - Administration: `/api/admin/*`
 
-All errors follow a consistent JSON envelope with `code`, `message`, and optional `details` fields. See `/api/docs` for the complete contract.
+All errors follow a consistent JSON envelope with `code`, `message`, and optional `details` fields. The complete contract is available through Swagger UI.
+
+## Screenshots
+
+Screenshots should be captured from a local instance connected to a valid TMDB key. Recommended views are the home page, movie details, search, custom lists, and the admin dashboard.
+
+## Project status
+
+**Status:** Functional academic project  
+**Purpose:** Study how artificial intelligence designs and implements a full-stack website  
+**AI usage:** 100% AI-built
+
+---
+
+<div align="center">
+
+### 🍿 Every movie leaves a trace. MovieHub helps you keep it.
+
+</div>
