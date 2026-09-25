@@ -1,6 +1,6 @@
 <div align="center">
 
-#  MovieHub
+# 🎬 MovieHub
 
 Discover, rate, organize, and share the movies that become part of your story.
 
@@ -9,7 +9,7 @@ Discover, rate, organize, and share the movies that become part of your story.
   <img alt="Express" src="https://img.shields.io/badge/Backend-Express-303846?style=for-the-badge&logo=express&logoColor=white">
   <img alt="Prisma" src="https://img.shields.io/badge/ORM-Prisma-5A67D8?style=for-the-badge&logo=prisma&logoColor=white">
   <img alt="TMDB" src="https://img.shields.io/badge/Data-TMDB-01B4E4?style=for-the-badge&logo=themoviedatabase&logoColor=white">
-  <img alt="AI" src="https://img.shields.io/badge/Built%20with-100%25%20AI-B39BC8?style=for-the-badge">
+  <img alt="Status" src="https://img.shields.io/badge/Status-Functional-B39BC8?style=for-the-badge">
 </p>
 
 A full-stack movie platform with discovery, accounts, favorites, custom lists, reviews, ratings, recommendations, and moderation tools.
@@ -18,13 +18,11 @@ A full-stack movie platform with discovery, accounts, favorites, custom lists, r
 
 ---
 
-## Academic and AI disclosure
+## Preview
 
-> **MovieHub was created 100% with artificial intelligence as a school project.**
+![MovieHub sign-in experience with its dark cinematic interface](docs/moviehub-preview.png)
 
-The purpose of the project was to observe and understand how AI systems plan, design, code, and structure a complete website. It serves as an academic experiment in AI-assisted web development, from the interface and user experience to the API, database, tests, and documentation.
-
-MovieHub should therefore be read as both a functional application and a study of how artificial intelligence approaches full-stack product development.
+---
 
 ## About MovieHub
 
@@ -202,15 +200,14 @@ npm run dev
 
 All errors follow a consistent JSON envelope with `code`, `message`, and optional `details` fields. The complete contract is available through Swagger UI.
 
-## Screenshots
+## More screenshots
 
-Screenshots should be captured from a local instance connected to a valid TMDB key. Recommended views are the home page, movie details, search, custom lists, and the admin dashboard.
+The preview above can be reproduced without an external movie-data key. Catalog views such as home, movie details, search, custom lists, and the admin dashboard require a local instance connected to a valid TMDB key.
 
 ## Project status
 
 **Status:** Functional academic project  
-**Purpose:** Study how artificial intelligence designs and implements a full-stack website  
-**AI usage:** 100% AI-built
+**Focus:** Full-stack architecture, movie discovery, community features, testing, and secure third-party API integration
 
 ---
 
