@@ -1,6 +1,6 @@
 <div align="center">
 
-# 🎬 MovieHub
+#  MovieHub
 
 Discover, rate, organize, and share the movies that become part of your story.
 
